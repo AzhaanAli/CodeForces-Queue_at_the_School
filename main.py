@@ -13,9 +13,11 @@ You've got the initial position of the children, at the initial moment of time.
 Determine the way the queue is going to look after t seconds.
 """
 
-# Sadly I think no matter what, we have to iterate, therefore code will be linear time.
-# Do a for loop that goes either until the entire queue is iterated though, or until swaps decrement to 0.
-# Whenever we find a boy followed by a girl, cut him out and place him one index ahead.
+# Previously, I believed this could only be done in linear time to the size of the queue.
+# Despite this, I think I've thought of a way to do it in linear time to the size of the amount of swaps.
+# All boys are shifted to the right by the amount of swaps, except for those who are at the end of the line.
+# (Let 'k' be the amount of swaps)
+# Because of this, we can insert 'k' girls at the beginning of the line, and remove the last 'k' girls from the end.
 
 data = input().split(' ')
 queue = input()
@@ -23,11 +25,9 @@ queue = input()
 queueLength = int(data[0])
 swaps = int(data[1])
 
-for i in range(0, queueLength):
-    if swaps == 0:
-        break
-    if queue[i] == 'B' and queue[i + 1] == 'G':
-        queue = queue[:i] + 'GB' + queue[i + 2:]
-        swaps -= 1
+# Reverse the string, so the replace method can be used to chop off the last k girls, then reverse it back.
+queue = queue[:: -1].replace('G', '', swaps)[:: -1]
+# Add as many girls as there are swaps to the front of the queue and the deed is done.
+queue = 'G' * swaps + queue
 
 print(queue)

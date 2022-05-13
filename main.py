@@ -25,8 +25,13 @@ queue = input()
 queueLength = int(data[0])
 swaps = int(data[1])
 
+# Swaps cannot be greater than the amount of girls that there are.
+# If there are fewer girls than swaps, set swaps to the amount of girls.
+swaps = min(swaps, queue.count('G'))
+
 # Reverse the string, so the replace method can be used to chop off the last k girls, then reverse it back.
 queue = queue[:: -1].replace('G', '', swaps)[:: -1]
+
 # Add as many girls as there are swaps to the front of the queue and the deed is done.
 queue = 'G' * swaps + queue
 
